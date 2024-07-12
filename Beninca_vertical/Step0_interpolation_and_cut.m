@@ -3,21 +3,15 @@ clear;
 close all;
 
 %% load raw data
-load('data')
+load('data_ori.mat')
+t_ori = data_ori.DayNumber;
+y_ori = [data_ori.Cyclopoids, data_ori.Protozoa, data_ori.Rotifers];
+labels = ["Cyclopoids", "Protozoa", "Rotifers"];
 
-%% parameters 1. interpolation
+num_component = length(y_ori(1,:));
+y_ori(isnan(y_ori)) = 0;
 
-% interpolation method
-% method = 1: linear interpolation
-% method = 2: spline interpolation
-% method = 3: fourier interpolation, 
-%             In this case, users have to choose the order of fourier method (1~8)
-
-method = 2;
-num_fourier = 6;
-
-%% parameters 2. cut the time series data
-num_component = length(y(1,:));        % number of component in this system
+%% parameters - cut the time series data
 window_size_ori = 40;     % For oscillatory data, 1 period is recommended
 overlapping_ratio = 0.9;  % overlapping ratio of moving window technique
 
@@ -36,10 +30,10 @@ window_move = window_move_ori / time_interval;
 %% plot raw data
 figure(1)
 for i = 1:num_component
-    plot(t, y(:,i))
+    plot(t_ori, y_ori(:,i))
     hold on
 end
-xlim([0,t(end)])
+xlim([0,t_ori(end)])
 xticks([])
 ylim([0,1])
 yticks([])
