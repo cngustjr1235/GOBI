@@ -90,7 +90,7 @@ for i = 1:num_data
 end
 
 %% plot 
-index = 1;
+index = 5;
 
 figure(1) % raw data & movavg
 plot(t, y_raw(:,index), 'k')
@@ -101,15 +101,21 @@ xlim([0,1000])
 set(gca,'fontsize',16)
 
 figure(2)
-index_data = 10;
+index_data = 1;
 y_tmp = cell2mat(y_total(index_data));
 y_fit_tmp = cell2mat(y_total_fit(index_data));
+y_tmp2 = y_total{13};
+y_fit_tmp2 = y_total_fit{13};
 
 plot(t_total, y_tmp(:,index), 'k')
 hold on
 plot(t_total, y_fit_tmp(:,index), 'r')
 hold on
+plot(t_total + 360, y_tmp2(:,index), 'k')
+hold on
+plot(t_total + 360, y_fit_tmp2(:,index), 'r')
 xlim([0,1000])
+title('rspar')
 set(gca,'fontsize',16)
 
 y_total = y_total_fit;

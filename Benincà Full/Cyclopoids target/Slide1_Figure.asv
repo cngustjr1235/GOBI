@@ -1,0 +1,14 @@
+addpath('../')
+load('data_ori.mat')
+t = data_ori.DayNumber;
+
+figure(Position=[0, 0, 800, 400])
+
+plot(t, data_ori.Pr, LineWidth=1, Color="blue", LineStyle='-')
+
+xlim([t(1), t(end)])
+xlabel("Time(Days)")
+ylabel("Rotifers")
+fontsize(18, "point")
+
+ylim([0,2])

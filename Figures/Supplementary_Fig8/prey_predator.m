@@ -35,6 +35,19 @@ while(1)
 end
 length_data = length(y_total);
 
+%% (Added) plot cutted data
+t_fit = linspace(0, window_size_ori, round(window_size_ori/time_interval)+1).';
+t_fit = t_fit(1:end-1);
+
+for j = 1:length_data
+    figure(j);
+    y_tmp = y_total{j};
+    for i = 1:num_component
+        plot(t_fit, y_tmp(:,i));
+        hold on;
+    end
+end
+
 %% Fourier fitting
 y_fit_total = {};
 t_fit = linspace(0, window_size_ori, round(window_size_ori/time_interval)+1).';
@@ -61,6 +74,18 @@ for i = 1:length_data
         y_fit(:,j) = y2;
     end
     y_fit_total{end+1} = y_fit; 
+end
+
+%% (Added) plot interpolated data
+
+for j = 1:length_data
+    figure(j);
+    y_tmp = y_total{j};
+    y_fit_tmp = y_fit_total{j};
+    for i = 1:num_component
+        plot(t_fit, y_tmp(:,i), t_fit, y_fit_tmp(:,i));
+        hold on
+    end
 end
 
 %% calculate residual

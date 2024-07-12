@@ -28,6 +28,12 @@ tspan = linspace(0,range, range/time_interval+1);
 [t0, x0] = ode45(@(t,y) sample_a(t,y,zt,z), tspan, [0]);
 ts = [z.', x0];
 
+% add noise
+ts(:,1) = ts(:,1) + 0.25 * rand(size(ts(:,1)));
+ts(:,1) = ts(:,1) / max(abs(ts(:,1)));
+ts(:,2) = ts(:,2) + 0.01 * rand(size(ts(:,2)));
+ts(:,2) = ts(:,2) / max(abs(ts(:,2)));
+
 % normalize the time series Z, X
 ts_norm = ts;
 for i = 1:2
@@ -36,24 +42,29 @@ for i = 1:2
     ts_norm(:,i) = ts_tmp;
 end
 
+
+
 % create X'
 X_prime = gradient(ts(:,2), time_interval);
 X_prime = X_prime / max(abs(X_prime)); % normalize X'
 
 % plot Fig. 1a
 figure(1)
-plot(t0, ts_norm(:,1), 'k','linewidth',2)
+plot(t0, ts_norm(:,1),'Color', '#00aeed','linewidth',5)
 hold on
-plot(t0, ts_norm(:,2), 'r','linewidth',2)
+plot(t0, ts_norm(:,2),'Color', '#ed0289','linewidth',5)
 hold on
-plot(t0, X_prime(:,1), 'b','linewidth',2)
+plot(t0, X_prime(:,1),'Color', '#6c6e71','linewidth',5)
 
 xlim([0,range])
 ylim([-1,1])
 xticks([0,range])
 yticks([-1,0,1])
 xticklabels({'0', '1'})
-set(gca, 'FontSize', font_s)
+% set(gca, 'FontSize', font_s)
+set(gca, 'FontSize', 20)
+set(gca, 'XColor', 'none')
+set(gca, 'YColor', 'none')
 xlabel('Norm. time');
 title('Fig. 1a')
 

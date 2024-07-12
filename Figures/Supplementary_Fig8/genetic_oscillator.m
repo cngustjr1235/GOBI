@@ -48,18 +48,18 @@ for i = 1:num_data
     
     per1 = (tmp1(1) - fs - 1) / fs;
     per2 = (tmp2(1) - fs - 1) / fs;
-    %period_list = [period_list ; [per1,per2]];
+    period_list = [period_list ; [per1,per2]];
         
-%     figure(i)
-%     plot(lags/fs,autocor)
-%     xlabel('Lag (days)')
-%     ylabel('Autocorrelation')
-%     axis([-1 1 -0.4 1.1])
+    figure(i)
+    plot(lags1/fs,autocor1)
+    xlabel('Lag (days)')
+    ylabel('Autocorrelation')
+    axis([-1 1 -0.4 1.1])
      
-%     figure(i)
-%     plot(t_int, y_int(:,1), 'r')
-%     hold on
-%     plot(t_int, y_int(:,2), 'b')
+    figure(i)
+    plot(t_int, y_int(:,1), 'r')
+    hold on
+    plot(t_int, y_int(:,2), 'b')
     
 end
 
