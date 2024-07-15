@@ -42,7 +42,12 @@ for i = 1:num_pair
         end
     end
 end
-num_candidate_delta = length(delta_candidate_list(:,1));
+
+if isempty(delta_candidate_list)
+   num_candidate_delta = 0;
+else
+   num_candidate_delta = length(delta_candidate_list(:,1));
+end
 
 %% delta test
 delta_list = zeros(num_candidate_delta, 2); % update the result of delta
