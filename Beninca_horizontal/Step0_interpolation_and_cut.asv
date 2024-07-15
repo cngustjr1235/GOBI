@@ -47,30 +47,30 @@ end
 %% cut the data
 
 cyc = y_fit(:, 1);
-pro = y_fit(:, 2);
-rot = y_fit(:, 3);
+pro = y_fit(:, 1);
+rot = y_fit(:, 1);
 cycdot = gradient(cyc, time_interval);
 
 fixed_target = 4;
 
 y_ext = [cyc, pro, rot, cycdot];
 
-[y_total, t_total, class_pair_list, class_count_list] = cut_horizontal(y_ext, t_fit, {[], [], [], []});
+[y_cut, t_cut, class_pair_list, class_count_list] = cut_horizontal(y_ext, t_fit, {[], [], [], []});
 
 %% normalize
-num_data = length(y_total);
+num_data = length(y_cut);
 
-for idx_data = 1:num_data
-    y_data = y_total{idx_data};
+for idx_data = 1:length(y_cut)
+    y_data = y_cut{idx_data};
     for idx_component = 1:num_component
 	y_comp = y_data(:, idx_component);
 	y_comp = y_comp - min(y_comp);
 	y_comp = y_comp / max(y_comp);
 	y_data(:, idx_component) = y_comp;
     end
-    y_total{idx_data} = y_data;
+    y_cut{idx_data} = y_data;
 end
 
 %% Save data
 
-save('data_cut','t_fit','y_fit','t_total','y_total','fixed_target','time_interval','num_data','num_component')
+save('data_cut','t_fit','y_fit','t_cut','y_total','fixed_target','time_interval','num_data','num_component')
