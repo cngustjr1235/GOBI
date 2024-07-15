@@ -60,13 +60,7 @@ for i = 1:num_candidate_boot
             C1_shuffled = C1(randperm(length(C1))); % shuffle the time seires of the first causal variable
             
             % compute the regulation-detection score using shuffled time series
-            if type_self == -1
-                [score_list, t_1, t_2] = RDS_ns_dim2(C1_shuffled, C2, T, t_target, time_interval);
-            elseif type_self == 1
-                [score_list, t_1, t_2] = RDS_ps_dim2(C1_shuffled, C2, T, t_target, time_interval);
-            else
-                [score_list, t_1, t_2] = RDS_dim2(C1_shuffled, C2, T, t_target, time_interval);
-            end
+            [score_list, t_1, t_2] = RDS_dim2(C1_shuffled, C2, T, t_target);
             
             score_tmp = reshape(score_list(:,:,type_tmp),[length(t_1(:,1)),length(t_1(1,:))]);
             
@@ -82,13 +76,7 @@ for i = 1:num_candidate_boot
             C2_shuffled = C2(randperm(length(C2))); % shuffle the time seires of the second causal variable
             
             % compute the regulation-detection score using shuffled time series
-            if type_self == -1
-                [score_list, t_1, t_2] = RDS_ns_dim2(C1, C2_shuffled, T, t_target, time_interval);
-            elseif type_self == 1
-                [score_list, t_1, t_2] = RDS_ps_dim2(C1, C2_shuffled, T, t_target, time_interval);
-            else
-                [score_list, t_1, t_2] = RDS_dim2(C1, C2_shuffled, T, t_target, time_interval);
-            end
+            [score_list, t_1, t_2] = RDS_dim2(C1, C2_shuffled, T, t_target);
             
             score_tmp = reshape(score_list(:,:,type_tmp),[length(t_1(:,1)),length(t_1(1,:))]);
             
@@ -104,13 +92,7 @@ for i = 1:num_candidate_boot
         end
         
         % compute the regulation-detection score with original time series
-        if type_self == -1
-            [score_list, t_1, t_2] = RDS_ns_dim2(C1, C2, T, t_target, time_interval);
-        elseif type_self == 1
-            [score_list, t_1, t_2] = RDS_ps_dim2(C1, C2, T, t_target, time_interval);
-        else
-            [score_list, t_1, t_2] = RDS_dim2(C1, C2, T, t_target, time_interval);
-        end
+        [score_list, t_1, t_2] = RDS_dim2(C1, C2, T, t_target);
         
         score_tmp = reshape(score_list(:,:,type_tmp),[length(t_1(:,1)),length(t_1(1,:))]);
 
