@@ -3,10 +3,10 @@ clear;
 close all;
 
 %% load raw data
-load('data_ori.mat')
-t_ori = data_ori.DayNumber;
-y_ori = [data_ori.Cyclopoids, data_ori.Protozoa, data_ori.Rotifers];
-labels = ["Cyclopoids", "Protozoa", "Rotifers"];
+load('raw_data_repressilator.mat')
+t_ori = t;
+y_ori = y;
+labels = ["TetR", "Lacl", "\lambda cl"];
 
 num_component = length(y_ori(1,:));
 y_ori(isnan(y_ori)) = 0;
@@ -31,7 +31,7 @@ t_fit = (t_ori(1):time_interval:t_ori(end)).';
 y_fit = zeros(length(t_fit),num_component);
 
 for i = 1:num_component
-	y_fit(:,i) = csaps(t_ori, y_ori(:, i), spline_param, t_fit);
+	y_fit(:,i) = interp1(t_ori, y_ori(:, i), t_fit, 'spline');
 end
 
 %% plot interpolated data
@@ -46,16 +46,18 @@ end
 
 %% cut the data
 
-cyc = y_fit(:, 1);
-pro = y_fit(:, 2);
-rot = y_fit(:, 3);
-cycdot = gradient(cyc, time_interval);
+tetr = y_fit(:, 1);
+lacl = y_fit(:, 2);
+lcl = y_fit(:, 3);
+tetrdot = gradient(tetr, time_interval);
+lacldot = gradient(lacl, time_interval);
+lcldot = gradient(lcl, time_interval);
 
-fixed_target = 4;
+fixed_target = 4:6;
 
-y_ext = [cyc, pro, rot, cycdot];
+y_ext = [tetr, lacl, lcl, tetrdot, lacldot, lcldot];
 
-[y_total, t_total, class_pair_list, class_count_list] = cut_horizontal(y_ext, t_fit, {[], [], [], []});
+[y_total, t_total, class_pair_list, class_count_list] = cut_horizontal(y_ext, t_fit, {[], [], [], [], [], []});
 
 %% normalize
 num_data = length(y_total);
