@@ -12,8 +12,8 @@ num_component = length(y_ori(1,:));
 y_ori(isnan(y_ori)) = 0;
 
 %% parameters - cut the time series data
-window_size_ori = 40;     % For oscillatory data, 1 period is recommended
-overlapping_ratio = 0.9;  % overlapping ratio of moving window technique
+window_size_ori = t_ori(end);     % For oscillatory data, 1 period is recommended
+overlapping_ratio = 0.1;  % overlapping ratio of moving window technique
 
 % choose sampling rate for interpolation. 
 % window_size_ori/time_interval becomes number of time points per cutted data
@@ -28,15 +28,14 @@ window_move = window_move_ori / time_interval;
 
 
 %% plot raw data
-figure(1)
 for i = 1:num_component
+    figure(i)
     plot(t_ori, y_ori(:,i))
-    hold on
+    xlim([0,t_ori(end)])
+    xticks([])
+    ylim([0,max(y_ori(:,i))])
+    yticks([])
 end
-xlim([0,t_ori(end)])
-xticks([])
-ylim([0,1])
-yticks([])
 
 %% interpolate data
 spline_param = 0.01;
@@ -49,16 +48,14 @@ for i = 1:num_component
 end
 
 %% plot interpolated data
-figure(2)
 for i = 1:num_component
+    figure(i)
     plot(t_fit, y_fit(:,i))
-    hold on
+    xlim([0,t_fit(end)])
+    xticks([])
+    ylim([0,max(y_fit(:,i))])
+    yticks([])
 end
-
-xlim([0,t_fit(end)])
-xticks([])
-ylim([0,1.02])
-yticks([])
 
 %% cut and interpolate the data
 y_total = {};
@@ -100,4 +97,4 @@ ylim([0,1.02])
 yticks([])
 %% Save data
 time_interval = 1/window_size;
-save('data_cut','t','y','y_total','time_interval','num_data','num_component')
+save('data_cut','t_fit','y_fit','y_total','time_interval','num_data','num_component')
