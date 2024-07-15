@@ -29,7 +29,7 @@ p_surrogate = 0.001; % critical value for surrogate test
 % type_self = 0  : no self regulations
 % type_self = 1  : positive self regulations
 
-type_self = -1;
+type_self = nan;
 
 %% options 3. maximum dimension of framework
 
@@ -42,6 +42,8 @@ end
 
 % users can adjust the max_D values
 % max_D = 2;
+y = y_fit;
+t = t_fit;
 
 filename = ['data_with_options'];
 save(filename, 't','y','y_total','time_interval','num_data','num_component','thres_R','thres_S','thres_TRS','p_delta','p_surrogate','type_self','max_D')
