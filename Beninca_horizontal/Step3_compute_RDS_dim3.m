@@ -16,7 +16,7 @@ component = [1:num_component];
 component_list_dim3_tmp = nchoosek(component, 3);
 component_list_dim3 = [];
 for i = 1:length(component_list_dim3_tmp(:,1))
-    for j = 1:num_component
+    for j = fixed_target
         if ismember(j, component_list_dim3_tmp(i,:))
             if isnan(type_self)
                 component_list_dim3 = [component_list_dim3 ; [component_list_dim3_tmp(i,:), j]];
@@ -46,8 +46,8 @@ S_total_list = zeros(num_pair,num_type,num_data); % save regulation-detection sc
 R_total_list = zeros(num_pair,num_type,num_data); % save regulation-detection region for all data
 parfor i = 1:num_data
     send(dq,i)
-    y_target = cell2mat(y_total(i));
-    t_target = t;
+    y_target = y_total{i};
+    t_target = t_total{i};
     
     S_total = zeros(num_pair,num_type); % save regulation-detection score for each data
     R_total = zeros(num_pair,num_type); % save regulation-detection region for each data
@@ -59,13 +59,7 @@ parfor i = 1:num_data
         ed = component_list_dim3(j,4);  % index for target
         
         % compute regulation-detection function
-        if type_self == -1
-            [score_list, t_1, t_2] = RDS_ns_dim3(y_target(:,st1), y_target(:,st2), y_target(:,st3), y_target(:,ed), t_target, time_interval);
-        elseif type_self == 1
-            [score_list, t_1, t_2] = RDS_ps_dim3(y_target(:,st1), y_target(:,st2), y_target(:,st3), y_target(:,ed), t_target, time_interval);
-        else
-            [score_list, t_1, t_2] = RDS_dim3(y_target(:,st1), y_target(:,st2), y_target(:,st3), y_target(:,ed), t_target, time_interval);
-        end
+        [score_list, t_1, t_2] = RDS_dim3(y_target(:,st1), y_target(:,st2), y_target(:,st3), y_target(:,ed), t_target);
         
         % compute regulation-detection score
         for k = 1:num_type
