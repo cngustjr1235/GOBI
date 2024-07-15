@@ -1,6 +1,6 @@
-function [score_list, t_1, t_2] = RDS_dim3(X, Y, Z, W, t, time_interval)
+function [score_list, t_1, t_2] = RDS_dim3(X, Y, Z, W, t)
 
-f = gradient(W, time_interval);
+f = W;
 score_list = zeros(length(t),length(t),8);
 t_1 = zeros(length(t),length(t));
 t_2 = zeros(length(t),length(t));
