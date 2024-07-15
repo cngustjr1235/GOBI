@@ -25,6 +25,10 @@ p_surrogate = 0.001; % critical value for surrogate test
 %% options 2. Choose the types of self-regulations
 
 % type_self = nan: infer without any assumptions of self regulations
+
+% In horizontal cutting, assuming self regulation makes code complicated.
+% So inferring self regulation is not implemented
+
 % type_self = -1 : negative self regulations
 % type_self = 0  : no self regulations
 % type_self = 1  : positive self regulations
@@ -46,6 +50,4 @@ y = y_fit;
 t = t_fit;
 
 filename = ['data_with_options'];
-save(filename, 't','y','y_total','time_interval','num_data','num_component','thres_R','thres_S','thres_TRS','p_delta','p_surrogate','type_self','max_D')
-
-
+save(filename, 't','y','t_total','y_total','fixed_target','time_interval','num_data','num_component','thres_R','thres_S','thres_TRS','p_delta','p_surrogate','type_self','max_D')
