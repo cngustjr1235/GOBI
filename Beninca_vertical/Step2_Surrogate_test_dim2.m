@@ -30,7 +30,12 @@ for i = 1:num_candidate_delta
         boot_type_list = [boot_type_list; delta_type_list(i)];
     end
 end
-num_candidate_boot = length(boot_candidate_list(:,1)); % candidate for the surrogate test (passing the delta test)
+
+if isempty(boot_candidate_list)
+    num_candidate_boot = 0;
+else
+    num_candidate_boot = length(boot_candidate_list(:,1)); % candidate for the surrogate test (passing the delta test)
+end
 
 %% surrogate test
 num_boot = 100;
