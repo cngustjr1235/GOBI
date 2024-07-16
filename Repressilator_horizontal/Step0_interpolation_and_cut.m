@@ -57,7 +57,7 @@ fixed_target = 4:6;
 
 y_ext = [tetr, lacl, lcl, tetrdot, lacldot, lcldot];
 
-[y_total, t_total, class_pair_list, class_count_list] = cut_horizontal(y_ext, t_fit, {[], [], [], [], [], []});
+[y_total, t_total, class_pair_list, class_count_list] = cut_horizontal(y_ext, t_fit, {[median(tetr)], [median(lacl)], [median(lcl)], [], [], []});
 
 %% normalize
 num_data = length(y_total);
