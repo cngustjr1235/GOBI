@@ -4,7 +4,7 @@ close all;
 addpath('../../GOBI') 
 
 %% load data
-load('data_repressilator.mat')
+load('data_final_repressilator.mat')
 num_component = 3;
 length_data = length(y_total);
 thres_noise = 0;
